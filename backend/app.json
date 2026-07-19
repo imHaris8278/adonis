@@ -1,0 +1,50 @@
+{
+  "name": "wasi-api",
+  "description": "Wasi manga & novel API",
+  "repository": "",
+  "env": {
+    "MONGODB_URI": {
+      "description": "MongoDB Atlas connection string"
+    },
+    "JWT_SECRET": {
+      "description": "Long random secret for JWT signing",
+      "generator": "secret"
+    },
+    "JWT_EXPIRES_IN": {
+      "description": "JWT expiry",
+      "value": "7d"
+    },
+    "CLIENT_URL": {
+      "description": "Frontend Heroku URL (https://your-frontend.herokuapp.com)"
+    },
+    "CLOUDINARY_CLOUD_NAME": {
+      "description": "Cloudinary cloud name"
+    },
+    "CLOUDINARY_API_KEY": {
+      "description": "Cloudinary API key"
+    },
+    "CLOUDINARY_API_SECRET": {
+      "description": "Cloudinary API secret"
+    },
+    "ADMIN_EMAIL": {
+      "value": "admin@wasi.com"
+    },
+    "ADMIN_PASSWORD": {
+      "description": "Admin password used by seed script"
+    },
+    "ADMIN_NAME": {
+      "value": "Admin"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

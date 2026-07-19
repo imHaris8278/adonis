@@ -1,0 +1,21 @@
+{
+  "name": "wasi-web",
+  "description": "Wasi manga & novel frontend",
+  "repository": "",
+  "env": {
+    "NEXT_PUBLIC_API_URL": {
+      "description": "Backend API base URL including /api (https://your-api.herokuapp.com/api)"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
