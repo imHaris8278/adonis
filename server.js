@@ -1,9 +1,15 @@
-require("dotenv").config({
-  path: require("path").join(__dirname, "backend", ".env"),
-});
+const path = require("path");
+
+// Load local backend/.env when present. On Heroku, config vars are already in process.env.
+try {
+  require(path.join(__dirname, "backend", "node_modules", "dotenv")).config({
+    path: path.join(__dirname, "backend", ".env"),
+  });
+} catch (_) {
+  // ignore — production uses Heroku config vars
+}
 
 const fs = require("fs");
-const path = require("path");
 const connectDB = require("./backend/src/config/db");
 const app = require("./backend/src/app");
 
@@ -20,9 +26,7 @@ app.use((req, res, next) => {
     return res
       .status(503)
       .type("html")
-      .send(
-        `<pre>Adonis failed to start:\n${bootError}</pre>`
-      );
+      .send(`<pre>Adonis failed to start:\n${bootError}</pre>`);
   }
   if (booting || !nextHandle) {
     return res
