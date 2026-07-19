@@ -1,15 +1,28 @@
 const path = require("path");
+const fs = require("fs");
 
-// Load local backend/.env when present. On Heroku, config vars are already in process.env.
-try {
-  require(path.join(__dirname, "backend", "node_modules", "dotenv")).config({
-    path: path.join(__dirname, "backend", ".env"),
-  });
-} catch (_) {
-  // ignore — production uses Heroku config vars
+// Heroku injects config vars into process.env — no dotenv needed in production.
+// For local combined runs, optionally load backend/.env if present.
+const envPath = path.join(__dirname, "backend", ".env");
+if (!process.env.DYNO && fs.existsSync(envPath)) {
+  const text = fs.readFileSync(envPath, "utf8");
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const i = trimmed.indexOf("=");
+    if (i === -1) continue;
+    const key = trimmed.slice(0, i).trim();
+    let val = trimmed.slice(i + 1).trim();
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
+      val = val.slice(1, -1);
+    }
+    if (!(key in process.env)) process.env[key] = val;
+  }
 }
 
-const fs = require("fs");
 const connectDB = require("./backend/src/config/db");
 const app = require("./backend/src/app");
 
@@ -19,7 +32,7 @@ let nextHandle = null;
 let booting = true;
 let bootError = null;
 
-// Satisfy Heroku boot timeout: bind to PORT immediately, warm up after.
+// Bind PORT first (Heroku 60s boot limit), then warm Mongo + Next.
 app.use((req, res, next) => {
   if (req.path.startsWith("/api")) return next();
   if (bootError) {
