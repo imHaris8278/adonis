@@ -135,7 +135,7 @@ export default function ManageSeriesPage() {
             fd.set("status", status);
             if (!isManga) fd.set("content", chapterBody);
             try {
-              const token = localStorage.getItem("wasi_token");
+              const token = localStorage.getItem("adonis_token");
               const res = await fetch(
                 `${API_URL}/admin/series/${series._id}/chapters`,
                 {

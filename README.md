@@ -1,11 +1,11 @@
-# Wasi
+# Adonis
 
 Manga & novel platform with a public reader and an admin publish panel.
 
 ## Structure
 
 ```
-Wasi/
+Adonis/
   frontend/   Next.js (App Router) — public site + admin UI
   backend/    Express API — auth, series, chapters, Cloudinary uploads
 ```
@@ -45,7 +45,7 @@ API: `http://localhost:5000`
 
 Default admin (change in `.env` before seeding):
 
-- Email: `admin@wasi.com`
+- Email: `admin@adonis.com`
 - Password: `Admin@123456`
 
 ### 4. Frontend
@@ -84,4 +84,5 @@ App: `http://localhost:3000`
 
 ## Deploy to Heroku
 
-See **[DEPLOY.md](./DEPLOY.md)** — two apps (`wasi-api` + `wasi-web`), Atlas + Cloudinary config, subtree push, and admin seed.
+See **[DEPLOY.md](./DEPLOY.md)** — single Heroku app serves API + Next.js from the repo root (`package.json` + `Procfile` + `server.js`).
+

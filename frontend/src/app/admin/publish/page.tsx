@@ -84,7 +84,7 @@ export default function PublishPage() {
           fd.set("status", status);
           fd.set("description", synopsis);
           try {
-            const token = localStorage.getItem("wasi_token");
+            const token = localStorage.getItem("adonis_token");
             const res = await fetch(`${API_URL}/admin/series`, {
               method: "POST",
               headers: token ? { Authorization: `Bearer ${token}` } : {},

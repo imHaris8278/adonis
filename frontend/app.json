@@ -1,6 +1,6 @@
 {
-  "name": "wasi-web",
-  "description": "Wasi manga & novel frontend",
+  "name": "adonis-web",
+  "description": "Adonis manga & novel frontend",
   "repository": "",
   "env": {
     "NEXT_PUBLIC_API_URL": {

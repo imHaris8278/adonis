@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
-    const token = localStorage.getItem("wasi_token");
+    const token = localStorage.getItem("adonis_token");
     if (!token) {
       setUser(null);
       setLoading(false);
@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const data = await api<{ user: User }>("/auth/me");
       setUser(data.user);
     } catch {
-      localStorage.removeItem("wasi_token");
+      localStorage.removeItem("adonis_token");
       setUser(null);
     } finally {
       setLoading(false);
@@ -52,7 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       method: "POST",
       body: JSON.stringify({ email, password }),
     });
-    localStorage.setItem("wasi_token", data.token);
+    localStorage.setItem("adonis_token", data.token);
     setUser(data.user);
     return data.user;
   }, []);
@@ -63,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: "POST",
         body: JSON.stringify({ name, email, password }),
       });
-      localStorage.setItem("wasi_token", data.token);
+      localStorage.setItem("adonis_token", data.token);
       setUser(data.user);
       return data.user;
     },
@@ -71,7 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const logout = useCallback(() => {
-    localStorage.removeItem("wasi_token");
+    localStorage.removeItem("adonis_token");
     setUser(null);
   }, []);
 

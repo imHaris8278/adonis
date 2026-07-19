@@ -1,0 +1,19 @@
+{
+  "name": "adonis",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Adonis — manga & novels (API + web)",
+  "engines": {
+    "node": "20.x || 22.x",
+    "npm": "10.x"
+  },
+  "scripts": {
+    "heroku-postbuild": "npm install --prefix backend && npm install --prefix frontend && NEXT_PUBLIC_API_URL=/api npm run build --prefix frontend",
+    "start": "node server.js",
+    "seed:admin": "npm run seed:admin --prefix backend"
+  },
+  "cacheDirectories": [
+    "backend/node_modules",
+    "frontend/node_modules"
+  ]
+}

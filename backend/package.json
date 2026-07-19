@@ -1,7 +1,7 @@
 {
-  "name": "wasi-backend",
+  "name": "adonis-backend",
   "version": "1.0.0",
-  "description": "Wasi manga & novel API",
+  "description": "Adonis manga & novel API",
   "main": "src/server.js",
   "engines": {
     "node": "20.x || 22.x",

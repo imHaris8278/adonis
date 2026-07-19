@@ -16,7 +16,7 @@ const display = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Wasi — Manga & Novels",
+  title: "Adonis — Manga & Novels",
   description: "Read and publish manga and novels.",
 };
 

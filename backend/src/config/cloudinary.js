@@ -18,7 +18,7 @@ const storage = new CloudinaryStorage({
       .replace(/(^-|-$)/g, "")
       .slice(0, 40);
     return {
-      folder: "wasi",
+      folder: "adonis",
       resource_type: "image",
       public_id: `${Date.now()}-${base || "image"}`,
       allowed_formats: ["jpg", "jpeg", "png", "webp", "gif"],

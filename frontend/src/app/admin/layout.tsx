@@ -45,7 +45,7 @@ export default function AdminLayout({
       <aside className="sticky top-0 z-20 border-b border-line bg-black px-4 py-4 sm:px-5 md:border-r md:border-b-0 md:px-6 md:py-6">
         <div className="flex items-center justify-between gap-4 md:block">
           <div>
-            <p className="display text-xl md:text-2xl">Wasi</p>
+            <p className="display text-xl md:text-2xl">Adonis</p>
             <p className="mt-0.5 text-xs text-muted">Admin</p>
           </div>
           <button

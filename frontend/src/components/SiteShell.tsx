@@ -45,7 +45,7 @@ function SiteShellInner({ children }: { children: React.ReactNode }) {
       {!isAdmin && (
         <header className="fixed top-0 right-0 left-0 z-40 flex items-center justify-between bg-black/80 px-4 py-4 backdrop-blur-md sm:px-5 md:px-8 md:py-5">
           <Link href="/" className="text-sm tracking-wide">
-            Wasi
+            Adonis
           </Link>
           <button
             type="button"
@@ -72,7 +72,7 @@ function SiteShellInner({ children }: { children: React.ReactNode }) {
         >
           <div className="flex items-center justify-between px-4 py-4 sm:px-5 md:px-8 md:py-5">
             <Link href="/" className="text-sm tracking-wide" onClick={() => setOpen(false)}>
-              Wasi
+              Adonis
             </Link>
             <button
               type="button"

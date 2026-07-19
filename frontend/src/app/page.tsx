@@ -12,7 +12,7 @@ export default function HomePage() {
 
       <div className="relative flex flex-1 items-center justify-center px-2">
         <h1 className="display rise-in text-[22vw] leading-none sm:text-[18vw] md:text-[12vw]">
-          Wasi
+          Adonis
         </h1>
       </div>
 

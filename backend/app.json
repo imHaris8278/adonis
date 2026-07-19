@@ -1,6 +1,6 @@
 {
-  "name": "wasi-api",
-  "description": "Wasi manga & novel API",
+  "name": "adonis-api",
+  "description": "Adonis manga & novel API",
   "repository": "",
   "env": {
     "MONGODB_URI": {
@@ -27,7 +27,7 @@
       "description": "Cloudinary API secret"
     },
     "ADMIN_EMAIL": {
-      "value": "admin@wasi.com"
+      "value": "admin@adonis.com"
     },
     "ADMIN_PASSWORD": {
       "description": "Admin password used by seed script"

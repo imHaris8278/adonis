@@ -33,11 +33,12 @@ export type Chapter = {
 };
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === "production" ? "/api" : "http://localhost:5000/api");
 
 function getToken() {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("wasi_token");
+  return localStorage.getItem("adonis_token");
 }
 
 export async function api<T>(

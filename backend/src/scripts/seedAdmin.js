@@ -5,7 +5,7 @@ const User = require("../models/User");
 async function seedAdmin() {
   await connectDB();
 
-  const email = process.env.ADMIN_EMAIL || "admin@wasi.com";
+  const email = process.env.ADMIN_EMAIL || "admin@adonis.com";
   const password = process.env.ADMIN_PASSWORD || "Admin@123456";
   const name = process.env.ADMIN_NAME || "Admin";
 
