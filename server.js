@@ -9,16 +9,40 @@ const app = require("./backend/src/app");
 
 const PORT = process.env.PORT || 3000;
 
+let nextHandle = null;
+let booting = true;
+let bootError = null;
+
+// Satisfy Heroku boot timeout: bind to PORT immediately, warm up after.
+app.use((req, res, next) => {
+  if (req.path.startsWith("/api")) return next();
+  if (bootError) {
+    return res
+      .status(503)
+      .type("html")
+      .send(
+        `<pre>Adonis failed to start:\n${bootError}</pre>`
+      );
+  }
+  if (booting || !nextHandle) {
+    return res
+      .status(503)
+      .type("html")
+      .send("<pre>Adonis is starting… refresh in a few seconds.</pre>");
+  }
+  return nextHandle(req, res);
+});
+
 async function attachNext() {
   const frontendDir = path.join(__dirname, "frontend");
   const nextDir = path.join(frontendDir, ".next");
   const nextPkg = path.join(frontendDir, "node_modules", "next");
 
   if (!fs.existsSync(nextPkg)) {
-    throw new Error(`Next.js not found at ${nextPkg}. Build may have failed.`);
+    throw new Error(`Next.js not found at ${nextPkg}`);
   }
   if (!fs.existsSync(nextDir)) {
-    throw new Error(`Next build missing at ${nextDir}. heroku-postbuild must run next build.`);
+    throw new Error(`Next build missing at ${nextDir}`);
   }
 
   const next = require(nextPkg);
@@ -27,17 +51,15 @@ async function attachNext() {
     dir: frontendDir,
   });
   await nextApp.prepare();
-  const handle = nextApp.getRequestHandler();
-  app.use((req, res) => handle(req, res));
-  console.log("Next.js frontend attached");
+  nextHandle = nextApp.getRequestHandler();
+  console.log("Next.js frontend ready");
 }
 
-async function start() {
-  console.log("Starting Adonis...", {
+async function warmUp() {
+  console.log("Warming up Adonis...", {
     node: process.version,
     dyno: process.env.DYNO || "local",
     hasMongo: Boolean(process.env.MONGODB_URI),
-    hasCloudinary: Boolean(process.env.CLOUDINARY_CLOUD_NAME),
   });
 
   await connectDB();
@@ -50,12 +72,15 @@ async function start() {
     await attachNext();
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Adonis running on port ${PORT}`);
-  });
+  booting = false;
+  console.log("Adonis ready");
 }
 
-start().catch((err) => {
-  console.error("Failed to start Adonis:", err);
-  process.exit(1);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Adonis listening on port ${PORT}`);
+  warmUp().catch((err) => {
+    console.error("Warm-up failed:", err);
+    bootError = err && err.stack ? err.stack : String(err);
+    booting = false;
+  });
 });
